@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GalleriesController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,3 +26,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 });
+
+Route::get('/galleries', [GalleriesController::class, 'index']);
+Route::post('/galleries', [GalleriesController::class, 'store']);
+Route::get('/galleries/{id}', [GalleriesController::class, 'show']);
+Route::put('/galleries/{id}', [GalleriesController::class, 'update']);
+Route::delete('/galleries/{id}', [GalleriesController::class, 'destroy']);
+Route::get('/comments', [GalleriesController::class, 'showComments']);
+Route::post('/comments', [GalleriesController::class, 'postComment']);
+Route::delete('/comments/{id}', [GalleriesController::class, 'deleteComment']);
