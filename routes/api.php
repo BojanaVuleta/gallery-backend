@@ -38,3 +38,4 @@ Route::delete('/comments/{id}', [GalleriesController::class, 'deleteComment']);
 Route::get('/users', [GalleriesController::class, 'showUsers']);
 Route::get('/users/{id}', [GalleriesController::class, 'showUser']);
 Route::get('/galleries/{id}/comments', [GalleriesController::class, 'showGalleryWithComments']);
+Route::get('/authors/{id}', [GalleriesController::class, 'authorGalleries']);

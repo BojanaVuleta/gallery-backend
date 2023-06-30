@@ -89,5 +89,10 @@ class GalleriesController extends Controller
     
         return ['gallery' => $gallery, 'comments' => $comments];
     }
+
+    public function authorGalleries($authorId) {
+        $galleries = $this->galleryService->showAuthorGalleries($authorId);
+        return $galleries;
+    }
     
 }

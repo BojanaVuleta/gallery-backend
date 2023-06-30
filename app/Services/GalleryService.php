@@ -14,7 +14,7 @@ class GalleryService {
   }
 
   public function showGallery($id) {
-    return Gallery::find($id);
+    return Gallery::with('user')->find($id);
   } 
 
   public function postGallery(Request $request) {
@@ -97,4 +97,8 @@ class GalleryService {
   public function showUser($id) {
     return User::find($id);
   } 
+
+  public function showAuthorGalleries($authorId) {
+    return Gallery::where('user_id', $authorId)->orderByDesc('created_at')->paginate(10);
+}
 }
