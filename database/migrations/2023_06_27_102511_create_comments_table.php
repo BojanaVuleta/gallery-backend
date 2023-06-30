@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('description');
-            $table->foreignId('gallery_id')->references('id')->on('galleries');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('gallery_id')->references('id')->on('galleries')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

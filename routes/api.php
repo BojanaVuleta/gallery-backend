@@ -35,3 +35,6 @@ Route::delete('/galleries/{id}', [GalleriesController::class, 'destroy']);
 Route::get('/comments', [GalleriesController::class, 'showComments']);
 Route::post('/comments', [GalleriesController::class, 'postComment']);
 Route::delete('/comments/{id}', [GalleriesController::class, 'deleteComment']);
+Route::get('/users', [GalleriesController::class, 'showUsers']);
+Route::get('/users/{id}', [GalleriesController::class, 'showUser']);
+Route::get('/galleries/{id}/comments', [GalleriesController::class, 'showGalleryWithComments']);

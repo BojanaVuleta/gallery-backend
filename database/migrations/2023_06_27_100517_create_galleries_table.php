@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description');
             $table->text('urls');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

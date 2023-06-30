@@ -4,12 +4,13 @@ namespace App\Services;
 
 use App\Models\Comment;
 use App\Models\Gallery;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class GalleryService {
 
   public function showGalleries() {
-    return Gallery::all();
+    return Gallery::with('user')->orderByDesc('created_at')->paginate(10);
   }
 
   public function showGallery($id) {
@@ -67,7 +68,7 @@ class GalleryService {
 
   public function createComment(Request $request) {
     $request->validate([
-      'description' => 'required|min:1|max:255'
+      'description' => 'required|min:1|max:1000'
     ]);
 
     $comment = new Comment();
@@ -79,8 +80,21 @@ class GalleryService {
     return $comment;
   }
 
+  public function showCommentsByGalleryId($galleryId)
+{
+    return Comment::where('gallery_id', $galleryId)->get();
+}
+
   public function deleteComment($id)
   {
       Comment::destroy($id);
   }
+
+  public function showUsers() {
+    return User::all();
+  }
+
+  public function showUser($id) {
+    return User::find($id);
+  } 
 }

@@ -71,4 +71,23 @@ class GalleriesController extends Controller
         return $comment;
     }
 
+    public function showUsers()
+    {
+        return $this->galleryService->showUsers();
+    }
+
+    public function showUser(string $id)
+    {
+        return $this->galleryService->showUser($id);
+    }
+
+    public function showGalleryWithComments($galleryId)
+    {
+        $gallery = $this->galleryService->showGallery($galleryId);
+        $comments = $this->galleryService->showCommentsByGalleryId($galleryId);
+
+    
+        return ['gallery' => $gallery, 'comments' => $comments];
+    }
+    
 }

@@ -44,10 +44,11 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|string|unique:users',
             'password' => 'required',
+             'confirmed',
             'string',
             'min:8',
             'regex:/^(?=.*[0-9])/',
