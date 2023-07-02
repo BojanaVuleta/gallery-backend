@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Gallery extends Model
 {
     use HasFactory;
+    
+    protected $casts = [
+        'urls' => 'array'
+    ];
 
     public function comments() {
         return $this->hasMany(Comment::class);

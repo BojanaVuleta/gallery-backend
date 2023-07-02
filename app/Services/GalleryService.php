@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Gallery;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GalleryService {
 
@@ -17,44 +18,43 @@ class GalleryService {
     return Gallery::with('user')->find($id);
   } 
 
-  public function postGallery(Request $request) {
-    $request->validate([
-      'name' => 'required',
-      'description' => 'required',
-      'urls' => 'required',
-      
-    ]);
-
-    $gallery = new Gallery;
-    $gallery->name = $request->name;
-    $gallery->description = $request->description;
-    $gallery->urls = $request->urls;
-    if($request->user_id) {
-      $gallery->user_id = $request->user_id;
-    }
-    $gallery->save();
-
-    return $gallery;
+  public function postGallery(Request $request)
+  {
+      $request->validate([
+          'name' => 'required',
+          'description' => 'required',
+          'urls' => 'required|array',
+      ]);
+  
+      $gallery = new Gallery;
+      $gallery->name = $request->name;
+      $gallery->description = $request->description;
+      $gallery->urls = $request->urls;
+      if ($request->user_id) {
+          $gallery->user_id = $request->user_id;
+      }
+      $gallery->save();
+  
+      return $gallery;
   }
-
+  
   public function editGallery(Request $request, string $id)
   {
-    $request->validate([
-      'name' => 'required',
-      'description' => 'required',
-      'urls' => 'required',
-      
-    ]);
-
+      $request->validate([
+          'name' => 'required',
+          'description' => 'required',
+          'urls' => 'required|array',
+      ]);
+  
       $gallery = Gallery::find($id);
       $gallery->name = $request->name;
       $gallery->description = $request->description;
       $gallery->urls = $request->urls;
-      if($request->user_id) {
-        $gallery->user_id = $request->user_id;
+      if ($request->user_id) {
+          $gallery->user_id = $request->user_id;
       }
       $gallery->save();
-
+  
       return $gallery;
   }
 
@@ -82,7 +82,7 @@ class GalleryService {
 
   public function showCommentsByGalleryId($galleryId)
 {
-    return Comment::where('gallery_id', $galleryId)->get();
+    return Comment::with('user')->where('gallery_id', $galleryId)->get();
 }
 
   public function deleteComment($id)
@@ -101,4 +101,16 @@ class GalleryService {
   public function showAuthorGalleries($authorId) {
     return Gallery::where('user_id', $authorId)->orderByDesc('created_at')->paginate(10);
 }
+
+public function showMyGalleries()
+{
+    if (Auth::check()) {
+        $user = Auth::user();
+        return Gallery::where('user_id', $user->id)->orderByDesc('created_at')->paginate(10);
+    } else {
+        
+        return response()->json(['message' => 'Korisnik nije prijavljen'], 401);
+    }
+}
+
 }
