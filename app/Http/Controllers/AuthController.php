@@ -94,4 +94,14 @@ class AuthController extends Controller
         ]);
     }
 
+    public function getAuthenticatedUser(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Not Authenticated'], 401);
+        }
+
+        return response()->json($user);
+    }
+
 }

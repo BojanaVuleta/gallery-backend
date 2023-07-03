@@ -102,15 +102,10 @@ class GalleryService {
     return Gallery::where('user_id', $authorId)->orderByDesc('created_at')->paginate(10);
 }
 
-public function showMyGalleries()
-{
-    if (Auth::check()) {
-        $user = Auth::user();
-        return Gallery::where('user_id', $user->id)->orderByDesc('created_at')->paginate(10);
-    } else {
-        
-        return response()->json(['message' => 'Korisnik nije prijavljen'], 401);
-    }
+
+
+public function showUserGalleries($userId, Request $request) {
+  return Gallery::with('user')->where('user_id', $userId)->orderByDesc('created_at')->paginate(10);
 }
 
 }

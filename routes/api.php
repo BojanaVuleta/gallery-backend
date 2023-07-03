@@ -25,6 +25,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+    Route::get('me', 'getAuthenticatedUser');
 });
 
 Route::get('/galleries', [GalleriesController::class, 'index']);
@@ -39,4 +40,4 @@ Route::get('/users', [GalleriesController::class, 'showUsers']);
 Route::get('/users/{id}', [GalleriesController::class, 'showUser']);
 Route::get('/galleries/{id}/comments', [GalleriesController::class, 'showGalleryWithComments']);
 Route::get('/authors/{id}', [GalleriesController::class, 'authorGalleries']);
-Route::get('/my-galleries', [GalleriesController::class, 'showMyGalleries']);
+Route::get('/users/{id}/galleries', [GalleriesController::class, 'showUserGalleries']);

@@ -95,10 +95,9 @@ class GalleriesController extends Controller
         return $galleries;
     }
 
-    public function showMyGalleries()
+    public function showUserGalleries($id, Request $request)
     {
-        $galleries = $this->galleryService->showMyGalleries();
-        return $galleries;
+        return $this->galleryService->showUserGalleries($id, $request);
     }
     
 }
